@@ -1,0 +1,57 @@
+version: "3.1"
+
+stories:
+  - story: Add event
+    steps:
+      - intent: add_event
+      - action: schedule_form
+      - active_loop: schedule_form
+      - slot_was_set:
+          - event_name: "Sales Meeting"
+          - event_date: "2023-04-01"
+          - event_time: "10:00 AM"
+          - attendees: "Thien, Dong, Son"
+      - action: action_add_event
+      - slot_was_set:
+          - event_name: null
+          - event_date: null
+          - event_time: null
+          - attendees: null
+      - action: utter_event_added
+
+  - story: Change event
+    steps:
+      - intent: change_event
+      - action: schedule_form
+      - active_loop: schedule_form
+      - slot_was_set:
+          - event_name: "Sales Meeting"
+      - action: schedule_form
+      - active_loop: schedule_form
+      - slot_was_set:
+          - event_date: "2023-04-05"
+          - event_time: "11:00 AM"
+          - attendees: "Thien, Dong, Son, Thanh"
+      - action: action_change_event
+      - slot_was_set:
+          - event_name: null
+          - event_date: null
+          - event_time: null
+          - attendees: null
+      - action: utter_event_changed
+
+  - story: Remove event
+    steps:
+      - intent: remove_event
+      - slot_was_set:
+          - event_name: "Sales Meeting"
+      - action: action_remove_event
+      - slot_was_set:
+          - event_name: null
+      - action: utter_event_removed
+
+  - story: Add attendee
+    steps:
+      - intent: add_attendee
+      - slot_was_set:
+          - event_name: "Sales Meeting"

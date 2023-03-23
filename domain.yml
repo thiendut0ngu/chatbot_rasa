@@ -1,0 +1,144 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - add_event
+  - change_event
+  - remove_event
+  - add_attendee
+  - change_attendee
+  - remove_attendee
+
+entities:
+  - event_name
+  - event_date
+  - event_time
+  - attendees
+  - attendee_name
+
+slots:
+  event_name:
+    type: unfeaturized
+    mappings:
+      - type: from_text
+        intent: add_event
+        role: event_name
+
+  event_date:
+    type: unfeaturized
+    mappings:
+      - type: from_entity
+        entity: event_date
+      - type: from_entity
+        entity: time
+        role: time
+      - type: from_text
+        intent: add_event
+        role: event_date
+
+  event_time:
+    type: unfeaturized
+    mappings:
+      - type: from_entity
+        entity: event_time
+      - type: from_text
+        intent: add_event
+        role: event_time
+
+  attendees:
+    type: list
+    default: []
+    mappings:
+      - type: from_text
+        intent: add_attendee
+        role: attendees
+
+  attendee_name:
+    type: unfeaturized
+    mappings:
+      - type: from_entity
+        entity: attendee_name
+      - type: from_text
+        intent: add_attendee
+        role: attendee_name
+
+actions:
+  - action_add_event
+  - action_change_event
+  - action_remove_event
+  - action_add_attendee
+  - action_change_attendee
+  - action_remove_attendee
+  - schedule_form
+
+templates:
+  utter_greet:
+    - text: "Hello! How can I help you with scheduling and event management?"
+
+  utter_goodbye:
+    - text: "Goodbye! Have a great day."
+
+  utter_ask_event_name:
+    - text: "What is the name of the event?"
+
+  utter_ask_event_date:
+    - text: "When is the event?"
+
+  utter_ask_event_time:
+    - text: "What time is the event?"
+
+  utter_ask_attendees:
+    - text: "Who will be attending the event?"
+
+  utter_ask_attendee_name:
+    - text: "What is the name of the attendee?"
+
+  utter_event_added:
+    - text: "Event '{event_name}' added to schedule on {event_date} at {event_time} with attendees {attendees}."
+
+  utter_event_changed:
+    - text: "Event '{event_name}' changed to {event_date} at {event_time} with attendees {attendees}."
+
+  utter_event_removed:
+    - text: "Event '{event_name}' removed from schedule."
+
+  utter_attendee_added:
+    - text: "Attendee '{attendee_name}' added to event '{event_name}'."
+
+  utter_attendee_changed:
+    - text: "Attendee '{attendee_name}' changed in event '{event_name}'."
+
+  utter_attendee_removed:
+    - text: "Attendee '{attendee_name}' removed from event '{event_name}'."
+
+forms:
+  schedule_form:
+    event_name:
+      - type: from_entity
+        entity: event_name
+      - type: from_intent
+        intent: affirm
+        value: "None"
+    event_date:
+      - type: from_text
+        intent: add_event
+        not_intent: change_event
+    event_time:
+      - type: from_text
+        intent: add_event
+        not_intent: change_event
+    attendees:
+      - type: from_text
+        intent: add_event
+        not_intent: change_event
+    attendee_name:
+      - type: from_text
+        intent: add_attendee
+        not_intent: change_attendee
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

@@ -1,0 +1,70 @@
+version: "3.1"
+
+nlu:
+  - intent: greet
+    examples: |
+      - hi
+      - hello
+      - hey there
+  - intent: goodbye
+    examples: |
+      - bye
+      - goodbye
+      - see you later
+  - intent: affirm
+    examples: |
+      - yes
+      - indeed
+      - that's correct
+  - intent: deny
+    examples: |
+      - no
+      - not really
+      - that's not right
+  - intent: add_event
+    examples: |
+      - schedule a meeting
+      - add an event to my calendar
+      - create a new appointment
+  - intent: change_event
+    examples: |
+      - reschedule the meeting
+      - change the appointment time
+      - update the event details
+  - intent: remove_event
+    examples: |
+      - cancel the meeting
+      - delete the appointment
+      - remove the event from my calendar
+  - intent: add_attendee
+    examples: |
+      - add Thien to the guest list
+      - invite Dong to the event
+      - include Son as a participant
+  - intent: change_attendee
+    examples: |
+      - update the attendee list
+      - change the guest details
+      - modify the participant list
+  - intent: remove_attendee
+    examples: |
+      - remove Thien from the guest list
+      - uninvite Dong from the event
+      - exclude Son as a participant
+
+  - regex: event_date
+    examples: |
+      - \d{4}-\d{2}-\d{2}
+  - regex: event_time
+    examples: |
+      - \d{1,2}:\d{2} (AM|PM)
+  - lookup: event_name
+    examples: |
+      - Sales Meeting
+      - Product Launch
+      - Team Building Retreat
+  - lookup: attendee_name
+    examples: |
+      - Thien
+      - Dong
+      - Son

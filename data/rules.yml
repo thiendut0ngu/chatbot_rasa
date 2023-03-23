@@ -1,0 +1,44 @@
+version: "3.1"
+
+rules:
+  - rule: Add attendee to event
+    steps:
+      - intent: add_attendee
+      - action: utter_ask_event_name
+      - intent: inform
+        entities:
+          - entity: event_name
+      - action: utter_ask_attendee_name
+      - intent: inform
+        entities:
+          - entity: attendee_name
+      - action: action_add_attendee
+      - action: utter_attendee_added
+
+  - rule: Change attendee in event
+    steps:
+      - intent: change_attendee
+      - action: utter_ask_event_name
+      - intent: inform
+        entities:
+          - entity: event_name
+      - action: utter_ask_attendee_name
+      - intent: inform
+        entities:
+          - entity: attendee_name
+      - action: action_change_attendee
+      - action: utter_attendee_changed
+
+  - rule: Remove attendee from event
+    steps:
+      - intent: remove_attendee
+      - action: utter_ask_event_name
+      - intent: inform
+        entities:
+          - entity: event_name
+      - action: utter_ask_attendee_name
+      - intent: inform
+        entities:
+          - entity: attendee_name
+      - action: action_remove_attendee
+      - action: utter_attendee_removed
